@@ -14,13 +14,12 @@ do_search = (msg, query) ->
     else if err
       msg.send err
       return
-    msg.send()
     data = cheerio.load(body)
     a = data('h3.t','div.result').html()
     if a == null
       msg.send "无搜索结果"
       return
-    msg.send "*在百度上搜索 \"#{query}\" 的前三个结果:*"
+    msg.send "*在 百度 上搜索 \"#{query}\" 的前三个结果:*"
     msg.send ""
     for num in [1..3]
       do (num) ->
