@@ -47,22 +47,26 @@ do_search = (msg, query) ->
 
 handle_search_results = (msg, query, results) ->
   unless results? && results.length > 0
-    return msg.send "*抱歉，未搜索到有关 \"#{query}\" 的结果.*"
+    return msg.send "**抱歉，未搜索到有关 \"#{md_escape(query)}\" 的结果.**"
 
-  msg.send "*在 Stack Overflow 上搜索 \"#{query}\" 的前三个结果:*"
+  msg.send "**在 Stack Overflow 上搜索 \"#{md_escape(query)}\" 的前三个结果:**"
   msg.send ""
   print_result(msg, result, index) for result, index in results
 
 print_result = (msg, result, index) ->
-  msg.send("*#{index+1}. #{result.title}:*")
-  msg.send(result.link)
+  msg.send("\#\#\#\# [#{index+1}. #{md_escape(result.title)}:](#{md_escape(result.link)})")
+  #msg.send(result.link)
   msg.send("")
+
+md_escape = (str) ->
+  for symbol in ["\\", "\`", "\[", "\]", "\(", "\)", "\*", "\_", "\-", "\+", "\~", "\^", "\#", "\$", "\>"]
+    str = str.replace RegExp("\\" + symbol,"g"), "\\#{symbol}"
+  return str
 
 module.exports = (robot) ->
   
   robot.respond /(?:stackoverflow|so) (.*)/i, (msg) ->
     unless process.env.HUBOT_STACK_OVERFLOW_API_KEY
       return msg.send "You must configure the HUBOT_STACK_OVERFLOW_API_KEY environment variable"
-
     query = msg.match[1]
     do_search(msg, query)
