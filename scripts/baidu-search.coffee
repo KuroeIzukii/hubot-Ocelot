@@ -19,8 +19,9 @@ do_search = (msg, query) ->
     if a == null
       msg.send "无搜索结果"
       return
-    msg.send "**在 百度 上搜索 \"#{md_escape(query)}\" 的前三个结果:**"
+    msg.send "\#\#\#\# [**在 百度 上搜索 \"#{md_escape(query)}\" 的前三个结果:**](#{md_escape(url)})"
     msg.send ""
+    index = 0
     for num in [1..3]
       do (num) ->
         a = data('h3.t','div[id="' + num + '"]').html()
@@ -32,7 +33,7 @@ do_search = (msg, query) ->
             if url.search(/http(s)?:/) != -1
               if md_escape(title) == ""
                 title = url
-              msg.send("\#\#\#\# [#{md_escape(title)}](#{md_escape(url)})")
+              msg.send("\#\#\#\#\# [#{index += 1}. #{md_escape(title)}](#{md_escape(url)})")
               msg.send("")
 
 md_escape = (str) ->

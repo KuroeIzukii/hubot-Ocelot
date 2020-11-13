@@ -6,7 +6,7 @@ npm install
 export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
 export ROCKETCHAT_URL=127.0.0.1:3000
 export ROCKETCHAT_USESSL=false
-export ROCKETCHAT_ROOM='general'
+export ROCKETCHAT_ROOM=general
 export RESPOND_TO_DM=true
 export RESPOND_TO_EDITED=true
 export ROCKETCHAT_USER=Ocelot
