@@ -16,6 +16,7 @@ do_search = (msg, query) ->
       return
     data = cheerio.load(body)
     a = data.html()
+    
     console.log(a)
 
 module.exports = (robot) ->
